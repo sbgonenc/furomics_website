@@ -1,6 +1,5 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-import os
 import streamlit as st
 import re
 
@@ -12,8 +11,8 @@ st.set_page_config(page_title="FurOmics", page_icon="🐾", layout="centered")
 def add_email_to_sheet(email):
     try:
         # Set up Google Sheets API client
-        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-        creds = ServiceAccountCredentials.from_json_keyfile_name("secrets/credentials.json", scope)
+        scopes = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+        creds = ServiceAccountCredentials.from_json_keyfile_dict(st.secrets.google.to_dict(), scopes)
         client = gspread.authorize(creds)
 
         # Open the sheet and append the email
