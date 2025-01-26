@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FurOmics Report | DNA Analysis for FurryFriends!</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --secondary: #2196F3;
+            --warning: #ff9800;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .upload-section {
+            text-align: center;
+            padding: 40px;
+            border: 2px dashed #ccc;
+            margin: 20px 0;
+        }
+        .report-card {
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        .risk-meter {
+            height: 20px;
+            background: #eee;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        .risk-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: var(--warning);
+            width: 85%;
+        }
+        .breed-pill {
+            display: inline-block;
+            padding: 5px 15px;
+            margin: 5px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐾 PetGen Report</h1>
+
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <h3>Upload Your Pet's Genomic Data</h3>
+            <input type="file" id="dnaUpload" accept=".txt,.vcf">
+            <p>or <button onclick="loadSample()">Try Sample Report</button></p>
+        </div>
+
+        <!-- Report Display (Initially Hidden) -->
+        <div id="report" style="display: none;">
+            <!-- Health Risk Card -->
+            <div class="report-card">
+                <h2>🧬 Health Risks</h2>
+                <div class="risk-meter">
+                    <div class="risk-fill"></div>
+                </div>
+                <p><b>PLA2G6-Related Neuroaxonal Dystrophy:</b> 85% Risk</p>
+                <small>Detected variant: missense mutation in PLA2G6 (chr10:26544820)</small>
+            </div>
+
+            <!-- Breed Composition Card -->
+            <div class="report-card">
+                <h2>🐕 Breed Analysis</h2>
+                <canvas id="breedChart"></canvas>
+                <div>
+                    <span class="breed-pill">42% Pit Bull</span>
+                    <span class="breed-pill">20% Husky</span>
+                    <span class="breed-pill">11% Lab</span>
+                </div>
+            </div>
+
+            <!-- Recommendations -->
+            <div class="report-card">
+                <h2>📋 Recommendations</h2>
+                <ul>
+                    <li>Annual neurological screening recommended</li>
+                    <li>Monitor for mobility changes after age 2</li>
+                    <li>Consider antioxidant-rich diet</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data loader
+        function loadSample() {
+            document.getElementById('report').style.display = 'block';
+
+            // Breed pie chart
+            new Chart(document.getElementById('breedChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Pit Bull', 'Husky', 'Lab', 'Boxer', 'Other'],
+                    datasets: [{
+                        data: [42, 20, 11, 10, 17],
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50', '#9C27B0']
+                    }]
+                }
+            });
+        }
+
+        // File upload handler
+        document.getElementById('dnaUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Here you would process the VCF file
+                alert('File uploaded! Generating report...');
+                document.getElementById('report').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
